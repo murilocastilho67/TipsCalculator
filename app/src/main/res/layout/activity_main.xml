@@ -47,25 +47,19 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
+    <Spinner
         android:id="@+id/til_number_of_people"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
+        android:hint="Enter the number of people at the table"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/til_total">
+        app:layout_constraintTop_toBottomOf="@+id/til_total"/>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tie_num_people"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="Enter the number of people at the table"
-            android:inputType="number"
-            android:maxLength="2"
-            android:textSize="13dp" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+
+
 
 
     <RadioGroup
@@ -127,5 +121,16 @@
         app:layout_constraintEnd_toEndOf="@+id/til_number_of_people"
         app:layout_constraintStart_toEndOf="@+id/vertical_guideline"
         app:layout_constraintTop_toBottomOf="@+id/rg_percentage" />
+
+    <TextView
+        android:id="@+id/tv_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_clean"
+        tools:text="57.5 " />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
