@@ -1,6 +1,10 @@
 package com.example.tipscalculator
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import com.example.tipscalculator.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
@@ -34,6 +38,34 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        val adapter = ArrayAdapter.createFromResource(
+            this,
+            R.array.num_people,
+            android.R.layout.simple_spinner_item
+        )
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinnerNumberOfPeople.adapter = adapter
+
+        var numOfPeopleSelected = 0
+
+        binding.spinnerNumberOfPeople.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener{
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    numOfPeopleSelected = position
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+
+                }
+
+            }
+
         binding.btnCalculate.setOnClickListener {
             val totalTableTemp = binding.tieTotal.text
 
@@ -42,18 +74,25 @@ class MainActivity : AppCompatActivity() {
                     .show()
             } else {
                 val totalTable: Float = totalTableTemp.toString().toFloat()
-                val nPeople: Int = 5
+                val nPeople: Int = numOfPeopleSelected
 
                 val totalTemp = totalTable / nPeople
                 val tips = totalTemp * percentage / 100
                 val totalWithTips = totalTemp + tips
-                binding.tvResult.text = "Total with tips: $totalWithTips"
-            }
 
+                val intent = Intent(this, SummaryActivity::class.java)
+
+                intent.apply {
+                    putExtra("totalTable", totalTable)
+                    putExtra("numPeople", numOfPeopleSelected)
+                    putExtra("percentage", percentage)
+                    putExtra("totalAmount", totalWithTips)
+                }
+                startActivity(intent)
+            }
         }
 
         binding.btnClean.setOnClickListener {
-            binding.tvResult.text = ""
             binding.tieTotal.setText("")
             binding.rbOptionThree.isChecked = false
             binding.rbOptionOne.isChecked = false
